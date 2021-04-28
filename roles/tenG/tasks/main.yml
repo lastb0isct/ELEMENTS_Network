@@ -8,15 +8,6 @@
     register: teng
 
   - name: Change 10G Interface Settings
-#    pause:
-#      seconds: 1
-#      prompt: |
-#        //////////////////
-#        IPADDR={{ IP[_index|int] }}
-#        NETMASK={{NETMASK}}
-#        DNS1={{DNS1}}
-#        GATEWAY={{GATEWAY}}
-#        //////////////////
     lineinfile:
       path: /etc/sysconfig/network-scripts/ifcfg-card-10Gb-1
       regexp: '{{item.From}}'
