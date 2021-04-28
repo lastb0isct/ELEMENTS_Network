@@ -1,7 +1,0 @@
----
-_index: '{{ ansible_play_hosts.index(inventory_hostname) }}'
-DNS1: '192.168.77.1'
-GATEWAY: '192.168.77.2'
-NETMASK: '255.255.255.0'
-IP: "{{ lookup('file', 'IP.txt').split('\n') }}"
-...
