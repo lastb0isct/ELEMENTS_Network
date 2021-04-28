@@ -1,0 +1,30 @@
+---
+  - name: Rename Interfaces
+    script: /var/lib/syslink/scripts/network-naming.sh  
+
+  - name: Check 10G Interface
+    stat:
+      path: /etc/sysconfig/network-scripts/ifcfg-card-10Gb-1
+    register: teng
+
+  - name: Change 10G Interface Settings
+#    pause:
+#      seconds: 1
+#      prompt: |
+#        //////////////////
+#        IPADDR={{ IP[_index|int] }}
+#        NETMASK={{NETMASK}}
+#        DNS1={{DNS1}}
+#        GATEWAY={{GATEWAY}}
+#        //////////////////
+    lineinfile:
+      path: /etc/sysconfig/network-scripts/ifcfg-card-10Gb-1
+      regexp: '{{item.From}}'
+      line: '{{item.To}}'
+    when: teng.stat.exists
+    with_items:
+     - { From: 'IPADDR=', To: 'IPADDR={{ IP[_index|int] }}'}
+     - { From: 'NETMASK=', To: 'NETMASK={{NETMASK}}'}
+     - { From: 'BOOTPROTO=dhcp', To: 'BOOTPROTO=static'}
+     - { From: 'DNS1=', To: 'DNS1={{DNS1}}'}
+     - { From: 'GATEWAY=', To: 'GATEWAY={{GATEWAY}}'}
