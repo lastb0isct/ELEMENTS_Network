@@ -1,0 +1,12 @@
+---
+  - name: "Change {{ cfgfile }} Interface Settings"
+    lineinfile:
+      path: "/etc/sysconfig/network-scripts/{{ cfgfile }}"
+      regexp: '^(.*){{ item.From }}(.*)$'
+      line: '{{item.To}}'
+    with_items:
+     - { From: 'IPADDR=', To: 'IPADDR={{ IP[_index|int] }}'}
+     - { From: 'NETMASK=', To: 'NETMASK={{NETMASK}}'}
+     - { From: 'BOOTPROTO=', To: 'BOOTPROTO=static'}
+     - { From: 'DNS1=', To: 'DNS1={{DNS1}}'}
+     - { From: 'GATEWAY=', To: 'GATEWAY={{GATEWAY}}'}

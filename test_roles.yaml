@@ -1,4 +1,8 @@
 ---
 - hosts: all
+  vars_prompt:
+    - name: cfgfile
+      prompt: What config file do you want to edit? [type out full filename "ifcfg-card-10Gb-1"]
+      private: no
   roles:
-    - tenG
+    - changeint
